@@ -1,5 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+//configuracao mongoose
+var mongoose = require('mongoose');
+var Produto = require('./App/models/product');
+
+//persistencia
+mongoose.connect('mongodb://localhost/bdcrud')
+
+//------------------------
 
 const app = express();
 
@@ -25,6 +33,40 @@ router.use(function(req,res,next){
 
 router.get('/',
 (req,res)=>res.json({'message':'rota teste ok'}));
+// rota de post
+router.route('/Produtos')
+    .post(function(req,res){
+        var produto = new Produto();
+        produto.nome=req.body.nome;
+        produto.preco =req.body.preco;
+        produto.descricao=req.body.descricao;
+
+        produto.save(function(error){
+            if(error)
+            res.send("Erro ao tentar salvar produto" + error);
+
+            res.status(201).json({message:"produto inserido com sucesso"});
+
+        });
+    })
+
+    //rota de get 
+
+  router.route('/produtos')
+  .get(function(req,res){
+        Produto.find(function(err,prods){
+            if(err)
+            req.send(err);
+
+            res.status(200).json({
+                message:"Produtos retornados.",
+                produtos:prods
+            })  ;  
+        });
+
+  })
+  
+
 
 //Vincular a aplicacao (app) com o motor de rotas
 app.use('/api',router);

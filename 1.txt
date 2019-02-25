@@ -1,4 +1,10 @@
 criar pasta e comando npm install
 npm install express --save
 npm install --save-dev nodemon
-cd
+npm run dev
+npm install
+mongo db
+criar pasta e inicializar C:\data\db
+baixar https://gitforwindows.org/
+verificar mongo db relacionamento 
+pesquisar denormalization
