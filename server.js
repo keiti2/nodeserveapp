@@ -66,7 +66,56 @@ router.route('/Produtos')
 
   })
   
+  //rota de get by id 
+  router.route('/produtos/getbyid/:uid')
+  
+  .get(function(req,res){
+    var uid = req.params.uid
+        Produto.findById(uid,function(err,prods){
+            if(err)
+             req.send(err);
+            
 
+            res.status(200).json({
+                message:"Produto:" ,
+                produtos:prods
+            })  ;  
+        });
+
+  })
+
+  //rota de delete
+  router.route('/produtos/delete/:deleteid')
+  
+  .post(function(req,res){
+    var deleteid = {adress:deleteid}
+        Produto.deleteOne(deleteid,function(err,prods){
+            if(err)
+            req.send(err);
+
+            res.status(200).json({
+                message:"Produtos Deletedo.",
+                //produtos:prods
+            })  ;  
+        });
+
+  })
+
+  //rota put
+  router.route('/produtos/put/:id')
+  
+  .put(function(req,res){
+    const id = req.params.id;
+        Produto.findByIdAndUpdate(id ,function(err,prods){
+            if(err)
+            req.send(err);
+
+            res.status(200).json({
+                message:"Produtos Atualizado.",
+                produtos:prods
+            })  ;  
+        });
+  })
 
 //Vincular a aplicacao (app) com o motor de rotas
 app.use('/api',router);
