@@ -52,8 +52,8 @@ router.route('/Produtos')
 
     //rota de get 
 
-  router.route('/produtos')
-  .get(function(req,res){
+router.route('/produtos')
+.get(function(req,res){
         Produto.find(function(err,prods){
             if(err)
             req.send(err);
@@ -64,30 +64,25 @@ router.route('/Produtos')
             })  ;  
         });
 
-  })
-  
-  //rota de get by id 
-  router.route('/produtos/getbyid/:uid')
-  
-  .get(function(req,res){
+})
+
+//rota de get by id 
+router.route('/produtos/getbyid/:uid')
+.get(function(req,res){
     var uid = req.params.uid
         Produto.findById(uid,function(err,prods){
             if(err)
              req.send(err);
-            
-
             res.status(200).json({
                 message:"Produto:" ,
                 produtos:prods
             })  ;  
         });
+})
 
-  })
-
-  //rota de delete
-  router.route('/produtos/delete/:deleteid')
-  
-  .post(function(req,res){
+//rota de delete
+router.route('/produtos/delete/:deleteid')
+.post(function(req,res){
     var deleteid = {adress:deleteid}
         Produto.deleteOne(deleteid,function(err,prods){
             if(err)
@@ -99,14 +94,13 @@ router.route('/Produtos')
             })  ;  
         });
 
-  })
+})
 
-  //rota put
-  router.route('/produtos/put/:id')
-  
-  .put(function(req,res){
+//rota put
+router.route('/produtos/put/:id')
+.put(function(req,res){
     const id = req.params.id;
-        Produto.findByIdAndUpdate(id ,function(err,prods){
+        Produto.findByIdAndUpdate({_id:req.params.id},req.body,function(err,prods){
             if(err)
             req.send(err);
 
@@ -115,7 +109,7 @@ router.route('/Produtos')
                 produtos:prods
             })  ;  
         });
-  })
+})
 
 //Vincular a aplicacao (app) com o motor de rotas
 app.use('/api',router);
