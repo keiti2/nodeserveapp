@@ -8,7 +8,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/keiti2/nodeserveapp.git"
+    "url": "https://github.com/keiti2/nodeserveapp.git",
+    "repositore": "https://github.com/keiti2/nodeserveapp.git"
   },
   "author": "",
   "license": "ISC",
