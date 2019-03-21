@@ -8,7 +8,7 @@ criar pasta e inicializar C:\data\db
 baixar https://gitforwindows.org/
 verificar mongo db relacionamento 
 pesquisar denormalization
-teste
+
 -----------------------------
 crud produtos
 - getall
