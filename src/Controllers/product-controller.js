@@ -1,58 +1,54 @@
 var Produto = require("../App/models/product");
 var mongoose = require('mongoose');
+repository = require('../repositories/produtct-repository')
 
-
-exports.post = (req, res) => {
-    var produto = new Produto();
-    produto.nome = req.body.nome;
-    produto.preco = req.body.preco;
-    produto.descricao = req.body.descricao;
-    produto.categoria = req.body.categoria
-
-    produto.save(function (error) {
-        if (error)
-            res.send("Erro ao tentar salvar produto" + error);
-
-        res.status(201).json({ message: "produto inserido com sucesso" });
-
-    });
-}
-
-exports.get = (req, res) => {
-    Produto.find(function (err, prods) {
-        if (err)
-            req.send(err);
-        res.status(200).json({
-            produtos: prods
+exports.post = async (req, res) => {
+    try {
+        await repository.post({
+            nome: req.body.nome,
+            preco:req.body.preco,
+            descricao: req.body.descricao
         });
-    });
+        res.status(201).send({
+            message:'Produto Cadastrado com sucesso!'
+        });
+    } catch (error) {
+        consele.log(erro)
+        res.status(500).send({
+            message:'Falha ao processar sua requisicao'
+        });
+    }
+}
+
+exports.get = async (req, res) => {
+   try {
+       var data = await repository.get();
+       res.status(200).send(data);
+   } catch (error) {
+       res.status(500).send({
+           message:"Falha requisicao",
+           erro:error
+       });
+   }
 
 }
 
-exports.getById = (req, res) => {
-    var uid = req.params.uid
-    Produto.findById(uid, function (err, prods) {
-        if (err) {
-            res.status(500).json(
-                { message: "Erro ao encontrar produto, id invalido" }
-            );
-        }
-        else if (produto == null) {
-            res.status(400).json(
-                {
-                    message: "produto nao encontrado para o id passado"
-                }
-            );
-        } else {
-            res.status(200).json(
-                { produtos: prods }
-            );
-        }
+exports.getById = async (req, res) => {
+   try {
+       const id = req.params.produto
+       var data = await repository.getById(id);
+       res.status(200).send(data);
+   } catch (error) {
+    res.status(500).send({
+        message:"Falha requisicao",
+        erro:error
     });
+   }
+    
 }
 
 
-exports.deletebyid=(req,res)=>{
+exports.deletebyid= async (req,res)=>{
     var deleteid = {adress:deleteid}
         Produto.deleteOne(deleteid,function(err,prods){
             if(err)
@@ -63,4 +59,19 @@ exports.deletebyid=(req,res)=>{
             })  ;  
         });
 
+}
+
+exports.put = async (req,res) => {
+    try {
+        const id = req.params.productid;
+        var data = await repository.put(id,req.body);
+        res.status(200).send({
+            message: "Produto atualizado"
+        });
+    } catch (error) {
+        res.status(500).send({
+            message:"Falha requisicao",
+            erro:error
+        });
+    }
 }

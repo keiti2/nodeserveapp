@@ -11,26 +11,15 @@ router.post("/",controller.post);
 router.get("/",controller.get);
 
 //rota de get by id  produto
-router.get('/:uid',controller.getById);
+router.get('/:id',controller.getById);
 
 
 //rota de delete produto
-router.post('/:deleteid',controller.deletebyid);
+router.post('/:id',controller.deletebyid);
 
 
 //rota put produto
-router.route('/produtos/put/:id')
-.put(function(req,res){
-    const id = req.params.id;
-        Produto.findByIdAndUpdate({_id:req.params.id},req.body,function(err,prods){
-            if(err)
-            req.send(err);
+router.put('/put:id');
 
-            res.status(200).json({
-                message:"Produtos Atualizado.",
-                produtos:prods
-            })  ;  
-        });
-})
 
 module.exports=router;
