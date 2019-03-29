@@ -1,12 +1,12 @@
-var Produto = require('../app/models/product');
+var Produto = require('../App/models/product');
 var mongoose = require('mongoose');
 
-exposts.get = async () => {
+exports.get = async () => {
     const res = await Produto.find();
     return res;
 }
 
-exposts.getById = async (id) => {
+exports.getById = async (id) => {
     const res = await Produto.findById(id);
     return res;
 }
@@ -24,22 +24,11 @@ exports.puts = async (id, data) => {
 
 
 exports.post = async (data) => {
-    try {
-       var produto = new Produto(data)
-       await product.save();
-
-        res.status(200).send({
-            message: "Produto Cadastrado"
-        });
-    } catch (error) {
-        res.status(500).send({
-            message:"Falha requisicao",
-            erro:error
-        });
-    }
+    var produto = new Produto(data);
+    await produto.save();
 }
 
 
-exposts.delete = async (id) => {
+exports.delete = async (id) => {
     await Produto.findOneAndRemove(id);
 }

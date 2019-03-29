@@ -1,6 +1,6 @@
 var Produto = require("../App/models/product");
 var mongoose = require('mongoose');
-repository = require('../repositories/produtct-repository')
+var repository = require('../repositories/produtct-repository');
 
 exports.post = async (req, res) => {
     try {
